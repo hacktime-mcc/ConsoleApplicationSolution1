@@ -2,15 +2,52 @@
 //
 
 #include "BaseClass.h"
+#include "Car.h"
 #include <iostream>
+
+
+void testMethod1(const Car& aCar) {
+	std::cout << "testMethod1() called\n";
+
+	//aCar.setModel("Green");  <-- compiler won't allow any calls to non-const methods
+
+	std::cout << aCar.getModel() << std::endl;
+	std::cout << "testMethod1() exited\n";
+}
+
+void testMethod2(Car& aCar) {
+	std::cout << "testMethod2() called\n";
+	aCar.setModel("Yellow");
+	std::cout << "testMethod2() exited\n";
+}
 
 int main()
 {
+	Car car("Ford");
+	Car& car2 = car;
+	const Car& car3 = car;
+
 	BaseClass B(1, 2);
 
 	std::cout << "Hello World!\n\n";
 	B.myMethod();
 	std::cout << "\n";
+
+
+	std::cout << "Car model in main() is " << car.getModel() << std::endl;
+
+	car2.setModel("Pink");
+	std::cout << "Car model in main() is " << car.getModel() << std::endl;
+
+	//car3.setModel("Pink"); <-- Compiler complains
+	//std::cout << "Car model in main() is " << car.getModel() << std::endl;
+
+
+	//testMethod1(car);
+	//std::cout << "Car model in main() is " << aCar.getModel() << std::endl;
+
+	testMethod2(car);
+	std::cout << "Car model in main() is " << car.getModel() << std::endl;
 
 	std::cout << "Done\n\n";
 }
